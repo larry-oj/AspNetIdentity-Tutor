@@ -2,6 +2,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddAuthentication()
+    .AddCookie("MyCookieAuth", config =>
+    {
+        config.Cookie.Name = "MyCookieAuth";
+    });
 
 var app = builder.Build();
 
