@@ -37,9 +37,18 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Login</a>
-                    </li>
+                    @if (base.User.Identity!.IsAuthenticated)
+                    {
+                        <form method="post" class="form-inline" asp-page="/Account/Logout">
+                            <input type="submit" class="nav-link text-dark" value="Logout" />
+                        </form>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Login</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
