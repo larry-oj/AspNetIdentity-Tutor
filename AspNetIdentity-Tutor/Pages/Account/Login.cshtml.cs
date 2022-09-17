@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using CookieOptions = AspNetIdentity_Tutor.Options.CookieOptions;
 
 namespace AspNetIdentity_Tutor.Pages.Account;
 
@@ -27,10 +28,10 @@ public class Login : PageModel
             new Claim(ClaimTypes.Role, "User")
         };
 
-        var identity = new ClaimsIdentity(claims, "MyCookieAuth");
+        var identity = new ClaimsIdentity(claims, CookieOptions.AuthCookieName);
         var principal = new ClaimsPrincipal(identity);
         
-        await HttpContext.SignInAsync("MyCookieAuth", principal);
+        await HttpContext.SignInAsync(CookieOptions.AuthCookieName, principal);
 
         return RedirectToPage("/Index");
     }

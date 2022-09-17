@@ -1,11 +1,13 @@
+using CookieOptions = AspNetIdentity_Tutor.Options.CookieOptions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddAuthentication()
-    .AddCookie("MyCookieAuth", config =>
+builder.Services.AddAuthentication(CookieOptions.AuthCookieName)
+    .AddCookie(CookieOptions.AuthCookieName, config =>
     {
-        config.Cookie.Name = "MyCookieAuth";
+        config.Cookie.Name = CookieOptions.AuthCookieName;
     });
 
 var app = builder.Build();
@@ -23,6 +25,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
