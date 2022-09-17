@@ -33,8 +33,13 @@ public class Login : PageModel
 
         var identity = new ClaimsIdentity(claims, CookieOptions.AuthCookieName);
         var principal = new ClaimsPrincipal(identity);
+
+        var authProperties = new AuthenticationProperties
+        {
+            IsPersistent = Credential.RememberMe
+        };
         
-        await HttpContext.SignInAsync(CookieOptions.AuthCookieName, principal);
+        await HttpContext.SignInAsync(CookieOptions.AuthCookieName, principal, authProperties);
 
         return RedirectToPage("/Index");
     }
@@ -52,4 +57,7 @@ public class Credential
     [DataType(DataType.Password)]
     [StringLength(30, MinimumLength = 3)]
     public string Password { get; set; }
+    
+    [Display(Name = "Remember Me")]
+    public bool RememberMe { get; set; }
 }

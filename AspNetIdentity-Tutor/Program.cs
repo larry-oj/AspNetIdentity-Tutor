@@ -9,6 +9,7 @@ builder.Services.AddAuthentication(CookieOptions.AuthCookieName)
     .AddCookie(CookieOptions.AuthCookieName, config =>
     {
         config.Cookie.Name = CookieOptions.AuthCookieName;
+        config.ExpireTimeSpan = TimeSpan.FromHours(2);
     });
 builder.Services.AddAuthorization(ops =>
 {
