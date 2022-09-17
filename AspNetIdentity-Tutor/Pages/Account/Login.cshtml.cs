@@ -22,10 +22,12 @@ public class Login : PageModel
             return Page();
         
         // Create security context
+        var role = Credential.Username == "admin" ? "Admin" : "User";
+        
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, Credential.Username),
-            new Claim(ClaimTypes.Role, "User")
+            new Claim(ClaimTypes.Role, role)
         };
 
         var identity = new ClaimsIdentity(claims, CookieOptions.AuthCookieName);

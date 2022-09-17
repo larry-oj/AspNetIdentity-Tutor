@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using CookieOptions = AspNetIdentity_Tutor.Options.CookieOptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,11 @@ builder.Services.AddAuthentication(CookieOptions.AuthCookieName)
     {
         config.Cookie.Name = CookieOptions.AuthCookieName;
     });
+builder.Services.AddAuthorization(ops =>
+{
+    ops.AddPolicy("AdminOnly",
+        policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+});
 
 var app = builder.Build();
 
