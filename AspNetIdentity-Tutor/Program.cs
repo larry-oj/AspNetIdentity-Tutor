@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using AspNetIdentity_Tutor.Hubs;
 using CookieOptions = AspNetIdentity_Tutor.Options.CookieOptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddAuthorization(ops =>
     ops.AddPolicy("AdminOnly",
         policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
 });
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -36,5 +38,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
